@@ -399,6 +399,43 @@ Heavy use: Depends on models chosen
 
 ---
 
+### Fireworks AI
+
+**Cost:** Pay-per-token, serverless (no dedicated capacity required)
+
+**Get Your API Key:**
+1. Go to https://app.fireworks.ai/settings/users/api-keys
+2. Create an account (if needed)
+3. Create a new API key (starts with `fw_`)
+
+**Configure in Open Notebook:**
+1. Go to **Settings** → **API Keys**
+2. Click **Add Credential**
+3. Select provider: **Fireworks AI**
+4. Give it a name, paste your API key
+5. Click **Save**, then **Test Connection**
+6. Click **Discover Models** → **Register Models**
+
+**Notes:**
+- Serves language and embedding models over an OpenAI-compatible endpoint
+  (`https://api.fireworks.ai/inference/v1`), which Open Notebook targets by default —
+  leave **Base URL** empty unless you run a dedicated Fireworks deployment.
+- **Model names are full paths**, e.g. `accounts/fireworks/models/llama-v3p1-8b-instruct`.
+  Discovery fills these in for you; if you add a model by hand, use the complete path.
+- Fireworks' audio (transcription) endpoints are outside the OpenAI-compatible surface
+  Open Notebook drives, so speech-to-text and text-to-speech are not offered for this
+  provider. Use another provider for those modalities.
+- Environment-variable fallback: `FIREWORKS_API_KEY`.
+
+**Troubleshooting:**
+- "Invalid API key" → Check the key in the Fireworks console
+- "Model not found" → You probably used a short name; use the full
+  `accounts/fireworks/models/...` path
+- Embedding models classified as language models → Re-discover, or change the type on the
+  model entry in **Settings** → **Models**
+
+---
+
 ### PayPerQ (PPQ)
 
 **Cost:** Pay-as-you-go across the providers it routes to

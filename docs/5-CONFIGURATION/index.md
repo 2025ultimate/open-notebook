@@ -199,6 +199,12 @@ OPEN_NOTEBOOK_ENCRYPTION_KEY=my-secret-key
 - Production hardening
 - Firewall configuration
 
+### [Google Sign-In](google-sso.md)
+- Firebase setup for Google SSO
+- Email allowlist (required)
+- What it does and does not do (shared workspace, not per-user)
+- Troubleshooting
+
 ### [Local TTS](local-tts.md)
 - Speaches setup for local text-to-speech
 - GPU acceleration

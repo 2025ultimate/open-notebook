@@ -1,5 +1,5 @@
 import apiClient from './client'
-import { getAuthToken } from '@/lib/auth-token'
+import { resolveAuthToken } from '@/lib/auth-token'
 import { SearchRequest, SearchResponse, AskRequest } from '@/lib/types/search'
 
 export const searchApi = {
@@ -12,7 +12,7 @@ export const searchApi = {
   // Ask with streaming (uses relative URL for Docker compatibility)
   askKnowledgeBase: async (params: AskRequest, signal?: AbortSignal) => {
     // Get auth token using the same logic as apiClient interceptor
-    const token = getAuthToken()
+    const token = await resolveAuthToken()
 
     // Use relative URL to leverage Next.js rewrites
     // This works both in dev (Next.js proxy) and production (Docker network)

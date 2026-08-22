@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 import { getApiUrl } from '@/lib/config'
-import { getAuthToken } from '@/lib/auth-token'
+import { resolveAuthToken } from '@/lib/auth-token'
 
 // API client with runtime-configurable base URL
 // The base URL is fetched from the API config endpoint on first request
@@ -39,7 +39,7 @@ apiClient.interceptors.request.use(async (config) => {
     config.baseURL = `${apiUrl}/api`
   }
 
-  const token = getAuthToken()
+  const token = await resolveAuthToken()
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }

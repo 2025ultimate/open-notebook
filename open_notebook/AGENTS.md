@@ -24,6 +24,7 @@ Normative rules for working on the Python backend. Architecture and design ratio
 - All LLM calls in graph nodes go through `provision_langchain_model()` — never instantiate provider clients directly. It auto-upgrades to `large_context_model` above 105,000 tokens (hard-coded threshold).
 - Missing/unconfigured model → raise `ConfigurationError` (not `ValueError`) so the API returns 422.
 - Credential-linked models are preferred; `provision_provider_keys()` is the env-var fallback and **mutates `os.environ`** — be aware in tests.
+- Providers esperanto has no native driver for are aliased onto a compatible one via `_ESPERANTO_PROVIDER_ALIASES` in `ai/models.py` (`anthropic_compatible`→`anthropic`, `fireworks`→`openai-compatible`), each with a base URL set alongside. Check esperanto actually supports a provider before adding it to the registry — an unknown name fails inside `AIFactory`, not at import.
 - `DefaultModels.get_instance()` intentionally bypasses the singleton cache (fresh DB fetch each call).
 
 ## Graphs (`open_notebook/graphs/`)
@@ -71,6 +72,7 @@ Normative rules for working on the Python backend. Architecture and design ratio
 | Variable | Meaning |
 |---|---|
 | `OPEN_NOTEBOOK_ENCRYPTION_KEY` (or `_FILE`) | Required for credential storage; any string, no default |
+| `OPEN_NOTEBOOK_AUTH_MODE` | `password` (default) or `firebase`. Firebase mode verifies a Google ID token + email allowlist and **fails closed** if misconfigured ([ADR-008](../docs/7-DEVELOPMENT/decisions/ADR-008-pluggable-auth-modes.md)). Neither mode scopes data per user |
 | `OPEN_NOTEBOOK_CHUNK_SIZE` / `_CHUNK_OVERLAP` | Token-based (default 400 / 15%); restart required |
 | `OPEN_NOTEBOOK_MAX_UPLOAD_SIZE_MB` | Upload cap (default 100) |
 | `LANGGRAPH_CHECKPOINT_FILE` | Chat history SQLite path |

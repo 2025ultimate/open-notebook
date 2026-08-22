@@ -10,12 +10,16 @@ export function useAuth() {
     isAuthenticated,
     isLoading,
     login,
+    loginWithGoogle,
     logout,
     checkAuth,
     checkAuthRequired,
     error,
     hasHydrated,
-    authRequired
+    authRequired,
+    authMode,
+    firebaseConfig,
+    authConfigured
   } = useAuthStore()
 
   useEffect(() => {
@@ -38,17 +42,29 @@ export function useAuth() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasHydrated, authRequired])
 
+  const redirectAfterLogin = () => {
+    // Check if there's a stored redirect path
+    const redirectPath = sessionStorage.getItem('redirectAfterLogin')
+    if (redirectPath) {
+      sessionStorage.removeItem('redirectAfterLogin')
+      router.push(redirectPath)
+    } else {
+      router.push('/notebooks')
+    }
+  }
+
   const handleLogin = async (password: string) => {
     const success = await login(password)
     if (success) {
-      // Check if there's a stored redirect path
-      const redirectPath = sessionStorage.getItem('redirectAfterLogin')
-      if (redirectPath) {
-        sessionStorage.removeItem('redirectAfterLogin')
-        router.push(redirectPath)
-      } else {
-        router.push('/notebooks')
-      }
+      redirectAfterLogin()
+    }
+    return success
+  }
+
+  const handleGoogleLogin = async () => {
+    const success = await loginWithGoogle()
+    if (success) {
+      redirectAfterLogin()
     }
     return success
   }
@@ -62,7 +78,11 @@ export function useAuth() {
     isAuthenticated,
     isLoading: isLoading || !hasHydrated, // Treat lack of hydration as loading
     error,
+    authMode,
+    firebaseConfig,
+    authConfigured,
     login: handleLogin,
+    loginWithGoogle: handleGoogleLogin,
     logout: handleLogout
   }
 }

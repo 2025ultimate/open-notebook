@@ -57,6 +57,7 @@ class TestOpenAICompatTable:
             "dashscope",
             "minimax",
             "novita",
+            "fireworks",
             "ppq",
         }
 
@@ -80,6 +81,7 @@ class TestOpenAICompatTable:
             "dashscope",
             "minimax",
             "novita",
+            "fireworks",
             "ppq",
             "cohere",
             "azure",
