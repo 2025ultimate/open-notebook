@@ -22,7 +22,7 @@ from open_notebook.ai.model_discovery import (
     classify_model_type,
     fetch_anthropic_model_ids,
 )
-from open_notebook.ai.provider_registry import PROVIDERS
+from open_notebook.ai.provider_registry import FIREWORKS_DEFAULT_BASE_URL, PROVIDERS
 from open_notebook.domain.credential import Credential
 from open_notebook.utils.encryption import get_secret_from_env
 from open_notebook.utils.url_validation import (
@@ -292,6 +292,15 @@ async def test_credential(credential_id: str) -> dict:
                 }
             success, message = await _test_anthropic_compatible_connection(
                 base_url, api_key
+            )
+            return {"provider": provider, "success": success, "message": message}
+
+        if provider == "fireworks":
+            # Fireworks is OpenAI-compatible; the base URL is pinned to the
+            # serverless endpoint unless the credential overrides it.
+            base_url = config.get("base_url") or FIREWORKS_DEFAULT_BASE_URL
+            success, message = await _test_openai_compatible_connection(
+                base_url, config.get("api_key")
             )
             return {"provider": provider, "success": success, "message": message}
 

@@ -32,6 +32,7 @@ KNOWN_GOOD_PROVIDERS = [
     "dashscope",
     "minimax",
     "novita",
+    "fireworks",
     "ppq",
     "cohere",
     "voyage",
@@ -114,6 +115,7 @@ class TestProviderRegistryIsTheSourceOfTruth:
             "dashscope": "https://dashscope.aliyuncs.com/compatible-mode/v1/models",
             "minimax": "https://api.minimax.io/v1/models",
             "novita": "https://api.novita.ai/openai/models",
+            "fireworks": "https://api.fireworks.ai/inference/v1/models",
             "ppq": "https://api.ppq.ai/v1/models?type=all",
         }
         assert {

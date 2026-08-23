@@ -1,5 +1,5 @@
 import apiClient from './client'
-import { getAuthToken } from '@/lib/auth-token'
+import { resolveAuthToken } from '@/lib/auth-token'
 import {
   SourceChatSession,
   SourceChatSessionWithMessages,
@@ -47,9 +47,13 @@ export const sourceChatApi = {
   },
 
   // Messaging with streaming
-  sendMessage: (sourceId: string, sessionId: string, data: SendMessageRequest) => {
+  sendMessage: async (
+    sourceId: string,
+    sessionId: string,
+    data: SendMessageRequest
+  ) => {
     // Get auth token using the same logic as apiClient interceptor
-    const token = getAuthToken()
+    const token = await resolveAuthToken()
 
     // Use relative URL to leverage Next.js rewrites
     // This works both in dev (Next.js proxy) and production (Docker network)

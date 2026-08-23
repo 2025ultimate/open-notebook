@@ -1,12 +1,12 @@
 # Security Configuration
 
-Protect your Open Notebook deployment with password authentication and production hardening.
+Protect your Grasp deployment with password authentication and production hardening.
 
 ---
 
 ## API Key Encryption
 
-Open Notebook encrypts API keys stored in the database using Fernet symmetric encryption (AES-128-CBC with HMAC-SHA256).
+Grasp encrypts API keys stored in the database using Fernet symmetric encryption (AES-128-CBC with HMAC-SHA256).
 
 ### Configuration Methods
 
@@ -60,6 +60,23 @@ environment:
 - **Backup securely**: Store the key separately from database backups
 - **No rotation yet**: Changing the key requires re-saving all API keys
 - **Per-deployment**: Each instance should have its own encryption key
+
+---
+
+## Choosing an Authentication Mode
+
+`OPEN_NOTEBOOK_AUTH_MODE` selects how callers authenticate. Both modes protect access to
+**one shared workspace** — neither gives each person their own notebooks.
+
+| Mode | What it is | Good for |
+|---|---|---|
+| `password` (default) | One shared password, sent as a Bearer credential. The rest of this page. | Most self-hosted setups |
+| `firebase` | Google sign-in, restricted to an email allowlist. See [Google Sign-In](google-sso.md) | Instances where several people need access and you want per-person revocation |
+
+Firebase mode adds real, revocable per-person access without a shared secret, but requires
+a Google Cloud/Firebase project and outbound internet access. If you already run a reverse
+proxy, an auth proxy (oauth2-proxy, Authelia, Cloudflare Access, Tailscale) is a third
+option that needs no configuration in Grasp — see [Reverse Proxy](reverse-proxy.md).
 
 ---
 
@@ -316,16 +333,18 @@ CORS_ORIGINS=https://notebook.example.com,https://admin.example.com
 
 ## Security Limitations
 
-Open Notebook's password protection provides **basic access control**, not enterprise-grade security:
+Grasp's password protection provides **basic access control**, not enterprise-grade security:
 
-| Feature | Status |
-|---------|--------|
-| Password transmission | Plain text (use HTTPS!) |
-| Password storage | In memory |
-| User management | Single password for all |
-| Session timeout | None (until browser close) |
-| Rate limiting | None |
-| Audit logging | None |
+| Feature | Status (`password` mode) | Status (`firebase` mode) |
+|---------|--------------------------|--------------------------|
+| Credential transmission | Plain text (use HTTPS!) | Signed JWT (still use HTTPS!) |
+| Credential storage | In memory | No shared secret to store |
+| User management | Single password for all | Per-person, via the email allowlist |
+| Session timeout | None (until browser close) | ID tokens expire hourly, refreshed by the SDK |
+| Rate limiting | None | None |
+| Audit logging | None | Verified email available per request, not persisted |
+
+Neither mode scopes data: everyone who gets in sees the same notebooks.
 
 ### Risk Mitigation
 

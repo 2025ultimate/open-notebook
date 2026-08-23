@@ -12,12 +12,22 @@ from loguru import logger
 from surrealdb import RecordID
 
 from open_notebook.ai.connection_tester import normalize_anthropic_compatible_base_url
+from open_notebook.ai.provider_registry import FIREWORKS_DEFAULT_BASE_URL
 from open_notebook.database.repository import ensure_record_id, repo_query
 from open_notebook.domain.base import ObjectModel, RecordModel
 from open_notebook.exceptions import ConfigurationError
 from open_notebook.utils.url_validation import validate_url
 
 ModelType = Union[LanguageModel, EmbeddingModel, SpeechToTextModel, TextToSpeechModel]
+
+# Providers esperanto has no native driver for, mapped onto the compatible
+# provider that can serve them. Both carry a base_url set further below:
+# anthropic_compatible from the user's credential, fireworks from
+# FIREWORKS_DEFAULT_BASE_URL. Everything else just swaps _ for - .
+_ESPERANTO_PROVIDER_ALIASES = {
+    "anthropic_compatible": "anthropic",
+    "fireworks": "openai-compatible",
+}
 
 # Config keys from Credential.to_esperanto_config() that may carry a
 # user-configured URL (ollama/azure/openai_compatible/vertex).
@@ -233,6 +243,16 @@ class ModelManager:
                 # request-time re-validation the credential-linked path gets.
                 await _revalidate_config_urls(config, model.provider)
 
+        # fireworks: same shape as anthropic_compatible — esperanto has no
+        # fireworks provider, so it maps to `openai-compatible` pinned to
+        # Fireworks' serverless endpoint. Unlike openai_compatible the base URL
+        # is ours, not user-supplied, so only the key comes from env. Runs
+        # before the kwargs merge for the same reason as the block above.
+        if model.provider == "fireworks" and not config:
+            api_key = os.environ.get("FIREWORKS_API_KEY")
+            if api_key:
+                config["api_key"] = api_key
+
         # Merge any additional kwargs (e.g. temperature)
         config.update(kwargs)
 
@@ -249,11 +269,19 @@ class ModelManager:
                 str(config["base_url"])
             )
 
-        # Normalize provider name: DB stores underscores but Esperanto expects hyphens
-        provider = (
-            "anthropic"
-            if model.provider == "anthropic_compatible"
-            else model.provider.replace("_", "-")
+        # Fireworks needs a key; the base URL defaults to the serverless
+        # endpoint but stays overridable (dedicated deployments). setdefault
+        # runs after the kwargs merge so an explicit override always wins.
+        if model.provider == "fireworks":
+            if not str(config.get("api_key", "")).strip():
+                raise ConfigurationError("Fireworks models require an API key")
+            config.setdefault("base_url", FIREWORKS_DEFAULT_BASE_URL)
+
+        # Normalize provider name: DB stores underscores but Esperanto expects
+        # hyphens. Providers esperanto doesn't know natively are aliased onto
+        # the compatible provider that can serve them.
+        provider = _ESPERANTO_PROVIDER_ALIASES.get(
+            model.provider, model.provider.replace("_", "-")
         )
 
         # Create model based on type (Esperanto will cache the instance)

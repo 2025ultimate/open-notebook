@@ -68,6 +68,13 @@ class ProviderSpec:
 _LANGUAGE_ONLY = ("language",)
 _ALL_MODALITIES = ("language", "embedding", "speech_to_text", "text_to_speech")
 
+# Fireworks' serverless inference endpoint. Esperanto has no native Fireworks
+# provider, so `fireworks` models are served through esperanto's
+# `openai-compatible` provider pinned to this URL (see
+# open_notebook/ai/models.py). Exposed as a constant because the credential
+# test and the model provisioning path both need the same default.
+FIREWORKS_DEFAULT_BASE_URL = "https://api.fireworks.ai/inference/v1"
+
 
 _PROVIDER_SPECS: Tuple[ProviderSpec, ...] = (
         ProviderSpec(
@@ -166,6 +173,23 @@ _PROVIDER_SPECS: Tuple[ProviderSpec, ...] = (
             test_model="moonshotai/kimi-k2.5",
             docs_url="https://novita.ai/settings/key-management",
             openai_compat_discovery_url="https://api.novita.ai/openai/models",
+        ),
+        ProviderSpec(
+            name="fireworks",
+            display_name="Fireworks AI",
+            # Serverless inference. Esperanto has no native fireworks provider,
+            # so this maps to its `openai-compatible` provider pinned to
+            # FIREWORKS_DEFAULT_BASE_URL (open_notebook/ai/models.py).
+            # Language + embedding only: Fireworks' audio endpoints are not
+            # part of the OpenAI-compatible surface esperanto drives.
+            modalities=("language", "embedding"),
+            required_env=("FIREWORKS_API_KEY",),
+            # Dynamic: Fireworks publishes no floating model alias, and model
+            # ids are retired on a schedule — a hard-coded id would rot. The
+            # credential test lists /models instead (api/credentials_service.py).
+            test_model=None,
+            docs_url="https://app.fireworks.ai/settings/users/api-keys",
+            openai_compat_discovery_url=f"{FIREWORKS_DEFAULT_BASE_URL}/models",
         ),
         ProviderSpec(
             name="ppq",

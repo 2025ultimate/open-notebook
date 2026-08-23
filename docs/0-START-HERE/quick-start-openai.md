@@ -1,6 +1,6 @@
 # Quick Start - OpenAI (5 minutes)
 
-Get Open Notebook running with OpenAI's GPT models. Fast, powerful, and simple.
+Get Grasp running with OpenAI's GPT models. Fast, powerful, and simple.
 
 ## Prerequisites
 
@@ -72,14 +72,14 @@ Wait 15-20 seconds for services to start.
 
 ---
 
-## Step 3: Access Open Notebook (instant)
+## Step 3: Access Grasp (instant)
 
 Open your browser:
 ```
 http://localhost:8502
 ```
 
-You should see the Open Notebook interface!
+You should see the Grasp interface!
 
 ---
 

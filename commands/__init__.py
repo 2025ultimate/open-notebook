@@ -1,4 +1,4 @@
-"""Surreal-commands integration for Open Notebook"""
+"""Surreal-commands integration for Grasp"""
 
 # The worker starts via `surreal-commands-worker --import-modules commands`,
 # so this package is imported before the worker connects to SurrealDB. Inject

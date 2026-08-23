@@ -174,6 +174,13 @@ PPQ_MODEL_TYPES = {
     "text_to_speech": ["aura", "tts", "eleven"],
 }
 
+# Fireworks model ids are namespaced paths (accounts/fireworks/models/<id>) and
+# the serverless catalog is language + embedding only, so a small embedding
+# pattern list is enough — everything else falls through to language.
+FIREWORKS_MODEL_TYPES = {
+    "embedding": ["embed", "gte-", "uae-"],
+}
+
 # OpenRouter added OpenAI-compatible TTS/STT endpoints (esperanto 2.25.0), but
 # its /models listing is dominated by language models and does not reliably tag
 # audio models — so audio discovery is a small static seed of the model ids
@@ -207,6 +214,7 @@ def classify_model_type(model_name: str, provider: str) -> str:
         "dashscope": DASHSCOPE_MODEL_TYPES,
         "minimax": MINIMAX_MODEL_TYPES,
         "ppq": PPQ_MODEL_TYPES,
+        "fireworks": FIREWORKS_MODEL_TYPES,
     }
 
     mapping = type_mappings.get(provider, {})
@@ -255,6 +263,7 @@ _COMPAT_CLASSIFY: Dict[str, Callable[[dict], str]] = {
     "mistral": _classify_mistral,
     # OpenRouter models are typically language models
     "openrouter": lambda model: "language",
+    "fireworks": lambda model: classify_model_type(model.get("id", ""), "fireworks"),
 }
 _COMPAT_DESCRIPTION: Dict[str, Callable[[dict], Optional[str]]] = {
     "openrouter": lambda model: model.get("name"),
@@ -339,6 +348,7 @@ discover_dashscope_models = _make_openai_compat_discoverer("dashscope")
 discover_minimax_models = _make_openai_compat_discoverer("minimax")
 discover_novita_models = _make_openai_compat_discoverer("novita")
 discover_ppq_models = _make_openai_compat_discoverer("ppq")
+discover_fireworks_models = _make_openai_compat_discoverer("fireworks")
 
 
 # =============================================================================
@@ -875,6 +885,7 @@ PROVIDER_DISCOVERY_FUNCTIONS = {
     "minimax": discover_minimax_models,
     "novita": discover_novita_models,
     "ppq": discover_ppq_models,
+    "fireworks": discover_fireworks_models,
     "cohere": discover_cohere_models,
     "azure": None,  # Azure requires credential-based discovery (different auth)
     "vertex": None,  # Vertex requires credential-based discovery (service account)

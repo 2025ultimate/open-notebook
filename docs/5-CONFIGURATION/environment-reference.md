@@ -1,6 +1,6 @@
 # Complete Environment Reference
 
-Comprehensive list of all environment variables available in Open Notebook.
+Comprehensive list of all environment variables available in Grasp.
 
 ---
 
@@ -11,13 +11,31 @@ Comprehensive list of all environment variables available in Open Notebook.
 | `API_URL` | No | Auto-detected | URL where frontend reaches API (e.g., http://localhost:5055) |
 | `INTERNAL_API_URL` | No | http://localhost:5055 | Internal API URL for Next.js server-side proxying |
 | `API_CLIENT_TIMEOUT` | No | 300 | Client timeout in seconds (how long to wait for API response) |
-| `OPEN_NOTEBOOK_PASSWORD` | No | None | Password to protect Open Notebook instance |
+| `OPEN_NOTEBOOK_PASSWORD` | No | None | Password to protect Grasp instance (used when `OPEN_NOTEBOOK_AUTH_MODE` is `password`) |
+| `OPEN_NOTEBOOK_AUTH_MODE` | No | `password` | How callers authenticate: `password` (shared password above) or `firebase` (Google sign-in with an email allowlist). An unrecognised value falls back to `password`. See [Google Sign-In](google-sso.md) |
 | `OPEN_NOTEBOOK_ENCRYPTION_KEY` | **Yes** | None | Secret string to encrypt credentials stored in database (any string works). **Required** for the credential system. Supports Docker secrets via `_FILE` suffix. |
 | `FRONTEND_BIND_HOST` | No | `0.0.0.0` (in Docker) | Network interface for Next.js to bind to. Default `0.0.0.0` ensures accessibility from reverse proxies. (Replaces `HOSTNAME`, which container runtimes such as Podman override with the container/pod hostname, causing Next.js to bind to the wrong address) |
 | `API_HOST` | No | `0.0.0.0` (in Docker) | Network interface for the API (uvicorn) to bind to. Set to `::` for IPv6 dual-stack environments (listens on IPv6 and, on Linux defaults, IPv4 too) |
 | `OPEN_NOTEBOOK_MAX_UPLOAD_SIZE_MB` | No | 100 | Maximum request body size (in MB) the API will accept, enforced before auth/routing. Raise this if you need to upload larger audio/video files. A fronting reverse proxy's own limit (e.g. nginx `client_max_body_size`) still applies and should be raised to match. |
 
 > **Important**: `OPEN_NOTEBOOK_ENCRYPTION_KEY` is required for storing AI provider credentials via the Settings UI. Without it, you cannot save credentials. If you change or lose this key, all stored credentials become unreadable.
+
+---
+
+## Authentication: Google Sign-In (Firebase)
+
+Only read when `OPEN_NOTEBOOK_AUTH_MODE=firebase`. Full walkthrough: [Google Sign-In](google-sso.md).
+
+| Variable | Required? | Default | Description |
+|----------|-----------|---------|-------------|
+| `OPEN_NOTEBOOK_FIREBASE_PROJECT_ID` | **Yes** (firebase mode) | None | Firebase project id. Verified as the token's `aud` and `iss`. Supports `_FILE` |
+| `OPEN_NOTEBOOK_FIREBASE_ALLOWED_EMAILS` | **Yes** (firebase mode) | None | Comma-separated Google addresses allowed to sign in, matched case-insensitively. **Never empty** — a Firebase project accepts any Google account, so this list is the access control. Supports `_FILE` |
+| `OPEN_NOTEBOOK_FIREBASE_API_KEY` | No | None | Firebase **web** API key, handed to the browser SDK via `/api/auth/status`. A public identifier, not a secret. Supports `_FILE` |
+| `OPEN_NOTEBOOK_FIREBASE_AUTH_DOMAIN` | No | `<project-id>.firebaseapp.com` | Firebase auth domain for the browser SDK. Supports `_FILE` |
+
+> **Fails closed.** With `OPEN_NOTEBOOK_AUTH_MODE=firebase` and either required variable missing, every request is rejected with 401 and the reason is logged at startup. Firebase mode also needs outbound internet access to Google — keep air-gapped installs on password mode.
+>
+> Google sign-in authenticates *who may enter*. It does **not** give each person their own notebooks — the workspace stays shared (see [ADR-008](../7-DEVELOPMENT/decisions/ADR-008-pluggable-auth-modes.md)).
 
 ---
 
@@ -127,7 +145,7 @@ These are **off by default** to keep the image lean. Setting one to `true` makes
 - Jina: https://jina.ai/
 - Crawl4AI: https://github.com/unclecode/crawl4ai
 
-The `CCORE_FIRECRAWL_*` variables are passed straight through to the content-core library (its settings are prefixed with `CCORE_`); Open Notebook itself doesn't read them. See [Content Processing Engines](../3-USER-GUIDE/content-processing-engines.md) for how these engines are selected in the UI.
+The `CCORE_FIRECRAWL_*` variables are passed straight through to the content-core library (its settings are prefixed with `CCORE_`); Grasp itself doesn't read them. See [Content Processing Engines](../3-USER-GUIDE/content-processing-engines.md) for how these engines are selected in the UI.
 
 ---
 
@@ -141,7 +159,7 @@ The `CCORE_FIRECRAWL_*` variables are passed straight through to the content-cor
 
 Route all outbound HTTP requests through a proxy server. Useful for corporate/firewalled environments.
 
-> **Important:** `NO_PROXY` must list the internal SurrealDB hosts — `host.docker.internal` (Docker) and `surrealdb` (the compose service name). The SurrealDB SDK connects over a websocket, and `websockets` 15.0+ tunnels even `ws://` connections through a configured proxy, which then rejects the internal host with **HTTP 403** and prevents the API and worker from starting. Open Notebook injects `host.docker.internal,surrealdb,localhost,127.0.0.1` into `NO_PROXY` automatically at startup as a safety net, but you should still set them explicitly.
+> **Important:** `NO_PROXY` must list the internal SurrealDB hosts — `host.docker.internal` (Docker) and `surrealdb` (the compose service name). The SurrealDB SDK connects over a websocket, and `websockets` 15.0+ tunnels even `ws://` connections through a configured proxy, which then rejects the internal host with **HTTP 403** and prevents the API and worker from starting. Grasp injects `host.docker.internal,surrealdb,localhost,127.0.0.1` into `NO_PROXY` automatically at startup as a safety net, but you should still set them explicitly.
 
 The underlying libraries (esperanto, content-core, podcast-creator) automatically detect proxy settings from these standard environment variables.
 
@@ -175,7 +193,7 @@ NO_PROXY=localhost,127.0.0.1,host.docker.internal,surrealdb,.local
 | `LANGCHAIN_TRACING_V2` | No | false | Enable LangSmith tracing |
 | `LANGCHAIN_ENDPOINT` | No | https://api.smith.langchain.com | LangSmith endpoint |
 | `LANGCHAIN_API_KEY` | No | None | LangSmith API key |
-| `LANGCHAIN_PROJECT` | No | Open Notebook | LangSmith project name |
+| `LANGCHAIN_PROJECT` | No | Grasp | LangSmith project name |
 
 **Setup:** https://smith.langchain.com/
 
@@ -296,6 +314,7 @@ If you have these variables configured from a previous installation, click the *
 | `VERTEX_LOCATION` | Vertex AI | Configure in Vertex AI credential |
 | `GOOGLE_APPLICATION_CREDENTIALS` | Vertex AI | Configure in Vertex AI credential |
 | `GROQ_API_KEY` | Groq | Settings → API Keys → Add Groq Credential |
+| `FIREWORKS_API_KEY` | Fireworks AI | Settings → API Keys → Add Fireworks AI Credential |
 | `MISTRAL_API_KEY` | Mistral | Settings → API Keys → Add Mistral Credential |
 | `DEEPSEEK_API_KEY` | DeepSeek | Settings → API Keys → Add DeepSeek Credential |
 | `XAI_API_KEY` | xAI | Settings → API Keys → Add xAI Credential |

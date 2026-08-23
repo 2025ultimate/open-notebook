@@ -85,6 +85,12 @@ PROVIDER_CONFIG = {
     "cohere": {
         "env_var": "COHERE_API_KEY",
     },
+    # Fireworks is served through esperanto's openai-compatible provider with a
+    # pinned base URL, so only the key is provisioned here — the base URL is
+    # supplied by open_notebook/ai/models.py, not by env.
+    "fireworks": {
+        "env_var": "FIREWORKS_API_KEY",
+    },
 }
 
 

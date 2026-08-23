@@ -31,8 +31,9 @@ const splineSansMono = Spline_Sans_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Open Notebook",
-  description: "Privacy-focused research and knowledge management",
+  title: "Grasp",
+  description: "Privacy-focused research and knowledge management, by Arctic Invent",
+  applicationName: "Grasp",
 };
 
 export default function RootLayout({

@@ -1,7 +1,7 @@
 [project]
 name = "open-notebook"
 version = "1.14.0"
-description = "An open source implementation of a research assistant, inspired by Google Notebook LM"
+description = "Grasp by Arctic Invent - an open source research assistant, inspired by Google Notebook LM"
 authors = [
     {name = "Luis Novo", email = "lfnovo@gmail.com"}
 ]
@@ -36,6 +36,12 @@ dependencies = [
     "langchain-mistralai>=1.1.1,<2",
     "tomli>=2.0.2",
     "python-dotenv>=1.2.2",
+    # Firebase ID token verification for the optional `firebase` auth mode
+    # (open_notebook/utils/firebase_auth.py). The [crypto] extra brings the
+    # RSA backend needed for RS256. Deliberately not `firebase-admin`: that
+    # pulls grpc + google-cloud and wants a service-account file on disk, for
+    # what is a signature check against a public JWKS.
+    "pyjwt[crypto]>=2.10,<3",
     "httpx[socks]>=0.27.0",
     "content-core>=2.0.4,<3",
     "ai-prompter>=0.4,<1",

@@ -1,10 +1,10 @@
 #!/bin/bash
-# Development environment startup for Open Notebook
+# Development environment startup for Grasp
 # Assumes SurrealDB is already running externally (per .env config)
 
 set -e
 
-echo "=== Open Notebook Dev Startup ==="
+echo "=== Grasp Dev Startup ==="
 
 # Check SurrealDB connectivity
 SURREAL_PORT=${SURREAL_PORT:-8018}
