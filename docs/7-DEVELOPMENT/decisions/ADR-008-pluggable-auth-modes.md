@@ -8,7 +8,7 @@
 
 Until now the only way to protect an instance was `OPEN_NOTEBOOK_PASSWORD`: one shared secret, compared against the Bearer credential, with the frontend storing that password in `localStorage` as its "token". It works, but a shared password is awkward to rotate, impossible to revoke per person, and gives no record of who opened the door.
 
-Operators asked for Google sign-in. That request is easy to confuse with multi-user, which it is not: Open Notebook has **no user in its data model** — no `user`, `owner` or `tenant` field exists on any table across all 20 migrations. Every notebook, source and note is global. Authenticating with Google therefore changes *who may enter*, not *what they see*. The multi-user question is still open (#712, PDR-001) and this decision must not pre-empt it.
+Operators asked for Google sign-in. That request is easy to confuse with multi-user, which it is not: Grasp has **no user in its data model** — no `user`, `owner` or `tenant` field exists on any table across all 20 migrations. Every notebook, source and note is global. Authenticating with Google therefore changes *who may enter*, not *what they see*. The multi-user question is still open (#712, PDR-001) and this decision must not pre-empt it.
 
 There is also a standing constraint: VISION.md's privacy principle forbids "a hard dependency on specific cloud services". An instance in an air-gapped network must keep working exactly as before.
 

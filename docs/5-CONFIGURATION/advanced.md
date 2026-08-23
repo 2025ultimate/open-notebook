@@ -109,7 +109,7 @@ For debugging LLM workflows:
 LANGCHAIN_TRACING_V2=true
 LANGCHAIN_ENDPOINT="https://api.smith.langchain.com"
 LANGCHAIN_API_KEY=your-key
-LANGCHAIN_PROJECT="Open Notebook"
+LANGCHAIN_PROJECT="Grasp"
 ```
 
 Then visit https://smith.langchain.com to see traces.
@@ -228,7 +228,7 @@ SURREAL_PASSWORD=$(openssl rand -base64 32)  # Generate secure password
 ### Add Password Protection
 
 ```env
-# Protect your Open Notebook instance
+# Protect your Grasp instance
 OPEN_NOTEBOOK_PASSWORD=your_secure_password
 ```
 
@@ -241,7 +241,7 @@ API_URL=https://mynotebook.example.com
 
 ### Firewall Rules
 
-Restrict access to your Open Notebook:
+Restrict access to your Grasp:
 - Port 8502 (frontend): Only from your IP
 - Port 5055 (API): Only from frontend
 - Port 8000 (SurrealDB): Never expose to internet
@@ -250,7 +250,7 @@ Restrict access to your Open Notebook:
 
 ## Web Scraping & Content Extraction
 
-Open Notebook uses multiple engines for content extraction. Which one runs is chosen in **Settings → Content Processing** (see the user-guide page on [Content Processing Engines](../3-USER-GUIDE/content-processing-engines.md)); the variables below configure them.
+Grasp uses multiple engines for content extraction. Which one runs is chosen in **Settings → Content Processing** (see the user-guide page on [Content Processing Engines](../3-USER-GUIDE/content-processing-engines.md)); the variables below configure them.
 
 ### Firecrawl
 

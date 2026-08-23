@@ -1,7 +1,7 @@
 /**
  * Firebase Google sign-in for the optional `firebase` auth mode.
  *
- * Everything here is behind a dynamic `import()` on purpose: most Open Notebook
+ * Everything here is behind a dynamic `import()` on purpose: most Grasp
  * instances run in password mode, and they must not pay for the Firebase SDK in
  * their bundle. Next.js code-splits these imports, so the chunk is only fetched
  * once an instance actually reports `auth_mode: "firebase"`.

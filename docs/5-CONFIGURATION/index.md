@@ -1,6 +1,6 @@
 # Configuration - Essential Settings
 
-Configuration is how you customize Open Notebook for your specific setup. This section covers what you need to know.
+Configuration is how you customize Grasp for your specific setup. This section covers what you need to know.
 
 ---
 
@@ -47,7 +47,7 @@ Use the right file depending on your setup.
 
 ### `.env` (Local Development)
 
-You will only use .env if you are running Open Notebook locally.
+You will only use .env if you are running Grasp locally.
 
 ```
 Located in: project root
@@ -246,7 +246,7 @@ OPEN_NOTEBOOK_ENCRYPTION_KEY=my-secret-key
 The recommended way to configure AI providers:
 
 ```
-1. Open Open Notebook in your browser
+1. Open Grasp in your browser
 2. Go to Settings → API Keys
 3. Click "Add Credential"
 4. Select provider, enter API key

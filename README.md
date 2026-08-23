@@ -15,7 +15,8 @@
     <img src="docs/assets/hero.svg" alt="Logo">
   </a>
 
-  <h3 align="center">Open Notebook</h3>
+  <h3 align="center">Grasp</h3>
+  <p align="center"><em>by Arctic Invent</em></p>
 
   <p align="center">
     An open source, privacy-focused alternative to Google's Notebook LM!
@@ -58,7 +59,7 @@
 
 In a world dominated by Artificial Intelligence, having the ability to think 🧠 and acquire new knowledge 💡, is a skill that should not be a privilege for a few, nor restricted to a single provider.
 
-**Open Notebook empowers you to:**
+**Grasp empowers you to:**
 - 🔒 **Control your data** - Keep your research private and secure
 - 🤖 **Choose your AI models** - Support for 18+ providers including OpenAI, Anthropic, Ollama, LM Studio, and more
 - 📚 **Organize multi-modal content** - PDFs, videos, audio, web pages, and more
@@ -71,9 +72,9 @@ Learn more about our project at [https://www.open-notebook.ai](https://www.open-
 
 ---
 
-## 🆚 Open Notebook vs Google Notebook LM
+## 🆚 Grasp vs Google Notebook LM
 
-| Feature | Open Notebook | Google Notebook LM | Advantage |
+| Feature | Grasp | Google Notebook LM | Advantage |
 |---------|---------------|--------------------|-----------|
 | **Privacy & Control** | Self-hosted, your data | Google cloud only | Complete data sovereignty |
 | **AI Provider Choice** | 18+ providers (OpenAI, Anthropic, Ollama, LM Studio, etc.) | Google models only | Flexibility and cost optimization |
@@ -85,7 +86,7 @@ Learn more about our project at [https://www.open-notebook.ai](https://www.open-
 | **Customization** | Open source, fully customizable | Closed system | Unlimited extensibility |
 | **Cost** | Pay only for AI usage | Free tier + Monthly subscription | Transparent and controllable |
 
-**Why Choose Open Notebook?**
+**Why Choose Grasp?**
 - 🔒 **Privacy First**: Your sensitive research stays completely private
 - 💰 **Cost Control**: Choose cheaper AI providers or run locally with Ollama
 - 🎙️ **Better Podcasts**: Full script control and multi-speaker flexibility vs limited 2-speaker deep-dive format
@@ -276,7 +277,7 @@ Thanks to the [Esperanto](https://github.com/lfnovo/esperanto) library, we suppo
 ## 📚 Documentation
 
 ### Getting Started
-- **[📖 Introduction](docs/0-START-HERE/index.md)** - Learn what Open Notebook offers
+- **[📖 Introduction](docs/0-START-HERE/index.md)** - Learn what Grasp offers
 - **[⚡ Quick Start with OpenAI](docs/0-START-HERE/quick-start-openai.md)** - Get up and running in 5 minutes
 - **[🔧 Installation](docs/1-INSTALLATION/index.md)** - Comprehensive setup guide
 - **[🎯 Run It Fully Local](docs/0-START-HERE/quick-start-local.md)** - Ollama/LM Studio, completely private
@@ -297,7 +298,7 @@ Thanks to the [Esperanto](https://github.com/lfnovo/esperanto) library, we suppo
 - **[🔧 REST API Reference](docs/7-DEVELOPMENT/api-reference.md)** - Complete API documentation
 - **[🔐 Security](docs/5-CONFIGURATION/security.md)** - Password protection and privacy
 - **[🚀 Deployment](docs/1-INSTALLATION/index.md)** - Complete deployment guides for all scenarios
-- **[🧭 Vision & Principles](VISION.md)** - What Open Notebook is, and where it's going
+- **[🧭 Vision & Principles](VISION.md)** - What Grasp is, and where it's going
 - **[🛠️ Developer Docs](docs/7-DEVELOPMENT/index.md)** - Architecture, setup, contributing, decision records
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -325,8 +326,8 @@ Explore [GitHub Discussions](https://github.com/lfnovo/open-notebook/discussions
 
 
 ## 📖 Need Help?
-- **🤖 AI Installation Assistant**: We have a [CustomGPT built to help you install Open Notebook](https://chatgpt.com/g/g-68776e2765b48191bd1bae3f30212631-open-notebook-installation-assistant) - it will guide you through each step!
-- **New to Open Notebook?** Start with our [Getting Started Guide](docs/0-START-HERE/index.md)
+- **🤖 AI Installation Assistant**: We have a [CustomGPT built to help you install Grasp](https://chatgpt.com/g/g-68776e2765b48191bd1bae3f30212631-open-notebook-installation-assistant) - it will guide you through each step!
+- **New to Grasp?** Start with our [Getting Started Guide](docs/0-START-HERE/index.md)
 - **Need installation help?** Check our [Installation Guide](docs/1-INSTALLATION/index.md)
 - **Want to see it in action?** Try our [Quick Start Tutorial](docs/0-START-HERE/index.md)
 
@@ -337,12 +338,12 @@ Explore [GitHub Discussions](https://github.com/lfnovo/open-notebook/discussions
 - 𝕏 **[Follow @lfnovo on X](https://x.com/lfnovo)** - Project updates and news from the maintainer
 - 💡 **[GitHub Discussions](https://github.com/lfnovo/open-notebook/discussions)** - Ask questions and shape features, product direction, design, and architecture
 - 🐛 **[GitHub Issues](https://github.com/lfnovo/open-notebook/issues)** - Report reproducible bugs and find approved work
-- ⭐ **Star this repo** - Show your support and help others discover Open Notebook
+- ⭐ **Star this repo** - Show your support and help others discover Grasp
 
 ### Contributing
 We welcome contributions! We're especially looking for help with:
 - **Frontend Development**: Help improve our modern Next.js/React UI
-- **Testing & Bug Fixes**: Make Open Notebook more robust
+- **Testing & Bug Fixes**: Make Grasp more robust
 - **Feature Development**: Build the coolest research tool together
 - **Documentation**: Improve guides and tutorials
 
@@ -356,7 +357,7 @@ See our [Contributing Guide](CONTRIBUTING.md) for detailed information on how to
 
 ## 📄 License
 
-Open Notebook is MIT licensed. See the [LICENSE](LICENSE) file for details.
+Grasp is MIT licensed. See the [LICENSE](LICENSE) file for details.
 
 
 **Community Support**:
@@ -394,3 +395,11 @@ Open Notebook is MIT licensed. See the [LICENSE](LICENSE) file for details.
 [LangChain-url]: https://www.langchain.com/
 [SurrealDB]: https://img.shields.io/badge/SurrealDB-FF5E00?style=for-the-badge&logo=databricks&logoColor=white
 [SurrealDB-url]: https://surrealdb.com/
+
+---
+
+## About
+
+**Grasp** is built and maintained by **Arctic Invent**.
+
+Grasp is a fork of [Open Notebook](https://github.com/lfnovo/open-notebook) by Luis Novo, used under the MIT licence. The original copyright notice is retained in [LICENSE](LICENSE), and links throughout these docs still point at upstream issues and discussions where that is where the conversation lives.

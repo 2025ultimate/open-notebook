@@ -1,5 +1,5 @@
 """
-Authentication router for Open Notebook API.
+Authentication router for Grasp API.
 Provides endpoints to check authentication status.
 """
 

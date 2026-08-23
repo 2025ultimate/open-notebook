@@ -1,6 +1,6 @@
 # OpenAI-Compatible Providers
 
-Use any server that implements the OpenAI API format with Open Notebook. This includes LM Studio, Text Generation WebUI, vLLM, and many others.
+Use any server that implements the OpenAI API format with Grasp. This includes LM Studio, Text Generation WebUI, vLLM, and many others.
 
 ---
 
@@ -14,7 +14,7 @@ POST /v1/embeddings
 POST /v1/audio/speech
 ```
 
-Open Notebook can connect to any server using this format.
+Grasp can connect to any server using this format.
 
 ---
 
@@ -55,7 +55,7 @@ export OPENAI_COMPATIBLE_BASE_URL=http://localhost:1234/v1
 export OPENAI_COMPATIBLE_API_KEY=not-needed
 ```
 
-### Step 3: Add Model in Open Notebook
+### Step 3: Add Model in Grasp
 
 1. Go to **Settings** → **Models**
 2. Click **Add Model**
@@ -113,7 +113,7 @@ OPENAI_COMPATIBLE_API_KEY_STT=optional-api-key
 
 ## Docker Networking
 
-When Open Notebook runs in Docker and your compatible server runs on the host, use the appropriate base URL when adding your credential in **Settings → API Keys**:
+When Grasp runs in Docker and your compatible server runs on the host, use the appropriate base URL when adding your credential in **Settings → API Keys**:
 
 ### macOS / Windows
 
@@ -152,7 +152,7 @@ services:
 python server.py --api --listen
 ```
 
-### Configure Open Notebook
+### Configure Grasp
 
 In **Settings → API Keys**, add an **OpenAI-Compatible** credential with base URL: `http://localhost:5000/v1`
 
@@ -191,7 +191,7 @@ python -m vllm.entrypoints.openai.api_server \
   --port 8000
 ```
 
-### Configure Open Notebook
+### Configure Grasp
 
 In **Settings → API Keys**, add an **OpenAI-Compatible** credential with base URL: `http://localhost:8000/v1`
 
@@ -205,7 +205,7 @@ services:
     command: --model meta-llama/Llama-3.1-8B-Instruct
     ports:
       # Localhost only (vLLM has no authentication by default), on host port
-      # 8001 because SurrealDB already publishes 8000. Open Notebook reaches
+      # 8001 because SurrealDB already publishes 8000. Grasp reaches
       # vLLM over the compose network at http://vllm:8000/v1 regardless.
       - "127.0.0.1:8001:8000"
     volumes:
@@ -229,7 +229,7 @@ Then in **Settings → API Keys**, add an **OpenAI-Compatible** credential with 
 
 ---
 
-## Adding Models in Open Notebook
+## Adding Models in Grasp
 
 ### Via Settings UI
 
@@ -299,7 +299,7 @@ Solutions:
 1. Check model is loaded in server
 2. Verify exact model name spelling
 3. List available models: curl http://localhost:1234/v1/models
-4. Update model name in Open Notebook
+4. Update model name in Grasp
 ```
 
 ### Slow Responses

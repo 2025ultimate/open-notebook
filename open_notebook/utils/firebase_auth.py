@@ -1,6 +1,6 @@
 """Firebase ID token verification for the optional `firebase` auth mode.
 
-Open Notebook is a single-workspace tool (see
+Grasp is a single-workspace tool (see
 docs/7-DEVELOPMENT/decisions/PDR-001-single-user-first.md): this module
 authenticates *who is at the door*, it does not scope data per user. Everyone
 who passes the allowlist shares the same notebooks, exactly as everyone who

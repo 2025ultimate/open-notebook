@@ -1,12 +1,12 @@
 # Security Configuration
 
-Protect your Open Notebook deployment with password authentication and production hardening.
+Protect your Grasp deployment with password authentication and production hardening.
 
 ---
 
 ## API Key Encryption
 
-Open Notebook encrypts API keys stored in the database using Fernet symmetric encryption (AES-128-CBC with HMAC-SHA256).
+Grasp encrypts API keys stored in the database using Fernet symmetric encryption (AES-128-CBC with HMAC-SHA256).
 
 ### Configuration Methods
 
@@ -76,7 +76,7 @@ environment:
 Firebase mode adds real, revocable per-person access without a shared secret, but requires
 a Google Cloud/Firebase project and outbound internet access. If you already run a reverse
 proxy, an auth proxy (oauth2-proxy, Authelia, Cloudflare Access, Tailscale) is a third
-option that needs no configuration in Open Notebook — see [Reverse Proxy](reverse-proxy.md).
+option that needs no configuration in Grasp — see [Reverse Proxy](reverse-proxy.md).
 
 ---
 
@@ -333,7 +333,7 @@ CORS_ORIGINS=https://notebook.example.com,https://admin.example.com
 
 ## Security Limitations
 
-Open Notebook's password protection provides **basic access control**, not enterprise-grade security:
+Grasp's password protection provides **basic access control**, not enterprise-grade security:
 
 | Feature | Status (`password` mode) | Status (`firebase` mode) |
 |---------|--------------------------|--------------------------|

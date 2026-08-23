@@ -1,4 +1,4 @@
-# Contributing to Open Notebook
+# Contributing to Grasp
 
 **📍 This file has moved!**
 

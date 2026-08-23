@@ -163,6 +163,7 @@ export function LoginForm() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle>{t('auth.loginTitle')}</CardTitle>
+          <p className="text-xs text-muted-foreground">{t('common.brandVendor')}</p>
           <CardDescription>
             {isFirebase ? t('auth.googleLoginDesc') : t('auth.loginDesc')}
           </CardDescription>

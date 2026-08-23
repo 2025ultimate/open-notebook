@@ -10,7 +10,7 @@ Protect your instance with Google accounts instead of a shared password.
 email allowlist you control. You can add and remove people without rotating a secret, and
 each sign-in is a real, revocable Google session.
 
-**Does not:** give each person their own notebooks. Open Notebook is a single-workspace
+**Does not:** give each person their own notebooks. Grasp is a single-workspace
 tool — everyone who gets in shares the same notebooks, sources and notes, exactly as
 everyone who knows the password does today. Per-user data is tracked separately in
 [#712](https://github.com/lfnovo/open-notebook/issues/712); see
@@ -43,17 +43,17 @@ exists for operators who don't run one.
    | `authDomain` | `OPEN_NOTEBOOK_FIREBASE_AUTH_DOMAIN` (optional) |
 
    These are **public identifiers**, not secrets — every Firebase web app ships them in its
-   client bundle, and Open Notebook serves them from `GET /api/auth/status` so the login
+   client bundle, and Grasp serves them from `GET /api/auth/status` so the login
    page can initialise the SDK. Access is controlled by the allowlist and by authorized
    domains, not by hiding these values.
 
 4. **Authentication → Settings → Authorized domains → Add domain.** Add the hostname you
-   reach Open Notebook on (e.g. `notebook.example.com`). `localhost` is authorized by
+   reach Grasp on (e.g. `notebook.example.com`). `localhost` is authorized by
    default. Sign-in fails with "this domain is not authorized" until you do this.
 
 ---
 
-## Step 2: Configure Open Notebook
+## Step 2: Configure Grasp
 
 ```bash
 OPEN_NOTEBOOK_AUTH_MODE=firebase
@@ -74,7 +74,7 @@ case-insensitively against the verified `email` claim. **It cannot be empty.**
 
 A Firebase project with Google sign-in enabled accepts *any* Google account on the
 internet — the project doesn't restrict who can authenticate, it only tells you who did.
-The allowlist is the thing that keeps strangers out. If it's missing, Open Notebook
+The allowlist is the thing that keeps strangers out. If it's missing, Grasp
 **denies every request** and logs the reason at startup, rather than starting up
 wide open.
 

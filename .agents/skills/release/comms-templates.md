@@ -39,7 +39,7 @@ Tone: honest and specific. Say what protections do AND what stays supported
 ## Discord announcement skeleton
 
 ```
-📢 Open Notebook v<X.Y.Z> is out — <hook: why upgrade>!
+📢 Grasp v<X.Y.Z> is out — <hook: why upgrade>!
 
 <2-3 lines: the headline theme (e.g. security pass) + feature highlights
 as a one-line · separated list>
